@@ -68,6 +68,6 @@ char uart_read() {
         UART->EVENTS_RXDRDY = 0;
         return out;
     } else {
-        return 'p';
+        return '\0';
     } 
 }

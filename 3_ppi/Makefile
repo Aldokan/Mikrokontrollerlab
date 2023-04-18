@@ -1,5 +1,5 @@
 FAMILY := nrf52
-SOURCES := main.c 
+SOURCES := main.c gpiote.c ppi.c
 
 BUILD_DIR := .build_system
 LINKER_SCRIPT := $(BUILD_DIR)/linker_script.ld
@@ -18,7 +18,7 @@ CFLAGS += -mcpu=cortex-m4 -mthumb -mabi=aapcs -mfloat-abi=soft
 CFLAGS += -ffunction-sections -fdata-sections --short-enums
 CFLAGS += -fno-strict-aliasing -fno-builtin
 # Good pracice
-CFLAGS += -Wall -Werror -std=gnu99
+CFLAGS += -Wall -std=gnu99
 # CFLAGS += -ggdb -Og / -O0 / -O3 etc
 # Chip specific
 CFLAGS += -DNRF52833_XXAA
@@ -38,12 +38,21 @@ default:
 	@echo Creating hex file
 	$(QUIET)$(OBJCOPY) -O ihex $(BUILD_DIR)/main.elf $(BUILD_DIR)/main.hex
 
-flash:
-	nrfjprog -f $(FAMILY) --sectorerase --program $(BUILD_DIR)/main.hex
-	nrfjprog -f $(FAMILY) --reset
+debug:
+	@echo Compiling project with debug
+	$(CC) $(CFLAGS) -g $(SOURCES) -o $(BUILD_DIR)/main.elf
+	@echo Creating hex file
+	$(OBJCOPY) -O ihex $(BUILD_DIR)/main.elf $(BUILD_DIR)/main.hex
 
+
+load:
+	@echo Loading main.hex to bootloader
+	pyocd load $(BUILD_DIR)/main.hex
+	@echo Resetting
+	pyocd reset
 erase:
-	nrfjprog -f $(FAMILY) --eraseall
+	@echo Erasing chip with pyocd
+	pyocd erase -c
 
 clean:
 	$(QUIET)rm $(BUILD_DIR)/main.{elf,hex}
