@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Micro:bit v2.2.1 pyOCD Debugger",
+            "cwd": "${workspaceRoot}",
+            "executable": "./.build_system/main.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "pyocd",
+            "configFiles": [
+                "interface/cmsis-dap.cfg",
+                "target/nrf52.cfg"
+            ],
+            // Uncomment for MacOS
+            //"armToolchainPath": "/opt/homebrew/bin/",
+            // Ubuntu Lab PC
+            "armToolchainPath": "/opt/arm-none-eabi-12.2/bin/",
+        "preLaunchTask": "build"
+        }
+    ]
+}

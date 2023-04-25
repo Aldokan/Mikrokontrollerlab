@@ -18,7 +18,7 @@ typedef struct {
 	// Tasks
 	volatile PPI_TASKS_TYPE PPI_TASKS[6];
 	// Registers
-	volatile uint32_t RESERVED0[320];
+	volatile uint32_t RESERVED0[308];
 	volatile uint32_t CHEN;
 	volatile uint32_t CHENSET;
 	volatile uint32_t CHENCLR;

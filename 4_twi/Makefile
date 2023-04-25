@@ -1,5 +1,5 @@
 FAMILY := nrf52
-SOURCES := main.c gpiote.c ppi.c
+SOURCES := main.c twi.c uart.c gpio.c
 
 BUILD_DIR := .build_system
 LINKER_SCRIPT := $(BUILD_DIR)/linker_script.ld
@@ -35,7 +35,7 @@ SOURCES += $(BUILD_DIR)/gcc_startup_nrf52833.S
 default:
 	@echo Compiling project
 	$(QUIET)$(CC) $(CFLAGS) $(SOURCES) -o $(BUILD_DIR)/main.elf
-	@echo Creating hex file in $(BUILD_DIR)
+	@echo Creating hex file
 	$(QUIET)$(OBJCOPY) -O ihex $(BUILD_DIR)/main.elf $(BUILD_DIR)/main.hex
 
 debug:
